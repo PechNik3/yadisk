@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Яндекс.Диск браузер</title>
+</head>
+<body>
+    <h1>Введите публичную ссылку на Яндекс.Диск</h1>
+    <form method="get">
+        <input type="text" name="public_key" placeholder="https://..." size="80" required>
+        <button type="submit">Показать файлы</button>
+    </form>
+
+    {% if files %}
+        <h2>Содержимое:</h2>
+        <ul>
+            {% for item in files %}
+                <li>
+                    {{ item.name }} —
+                    {{ item.type }} —
+                    {% if item.type == 'file' %}
+                        <a href="{{ item.file }}" download>Скачать</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
