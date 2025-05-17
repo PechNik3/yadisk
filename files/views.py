@@ -13,7 +13,7 @@ YANDEX_API_URL = 'https://cloud-api.yandex.net/v1/disk/public/resources'
 
 def filter_items_by_type(items: List[Dict], filter_type: str) -> List[Dict]:
     """
-    Фильтрует список файлов по типу (images, documents, videos и т.д.)
+    Фильтрует список файлов по типу
     """
     if filter_type == 'all':
         return items
@@ -59,7 +59,7 @@ def get_yadisk_items(public_key: str) -> List[Dict]:
 
 def generate_zip_from_urls(urls: List[str], names: List[str]) -> Optional[bytes]:
     """
-    Скачивает файлы по URL и собирает zip-архив, возвращает байты архива
+    Скачивает файлы по URL и собирает архив, возвращает байты архива
     """
     with tempfile.TemporaryDirectory() as tmpdir:
         zip_path = os.path.join(tmpdir, 'archive.zip')
