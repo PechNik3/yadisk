@@ -26,6 +26,7 @@
                         <label>
                             {% if item.type == 'file' %}
                                 <input type="checkbox" name="selected_files" value="{{ item.file }}">
+                                <input type="hidden" name="file_names" value="{{ item.name }}">
                             {% endif %}
                             {{ item.name }} — {{ item.type }}
                         </label>
@@ -35,6 +36,7 @@
                     </li>
                 {% endfor %}
             </ul>
+            <button type="submit">Скачать выбранные файлы в ZIP</button>
         </form>
     {% endif %}
 </body>
