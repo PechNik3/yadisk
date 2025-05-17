@@ -6,23 +6,36 @@
 <body>
     <h1>Введите публичную ссылку на Яндекс.Диск</h1>
     <form method="get">
-        <input type="text" name="public_key" placeholder="https://..." size="80" required>
+        <input type="text" name="public_key" value="{{ public_key }}" placeholder="https://..." size="80" required>
+        <select name="type">
+            <option value="all" {% if selected_type == 'all' %}selected{% endif %}>Все</option>
+            <option value="images" {% if selected_type == 'images' %}selected{% endif %}>Изображения</option>
+            <option value="videos" {% if selected_type == 'videos' %}selected{% endif %}>Видео</option>
+            <option value="documents" {% if selected_type == 'documents' %}selected{% endif %}>Документы</option>
+        </select>
         <button type="submit">Показать файлы</button>
     </form>
 
     {% if files %}
         <h2>Содержимое:</h2>
-        <ul>
-            {% for item in files %}
-                <li>
-                    {{ item.name }} —
-                    {{ item.type }} —
-                    {% if item.type == 'file' %}
-                        <a href="{{ item.file }}" download>Скачать</a>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
+        <form method="post">
+            {% csrf_token %}
+            <ul>
+                {% for item in files %}
+                    <li>
+                        <label>
+                            {% if item.type == 'file' %}
+                                <input type="checkbox" name="selected_files" value="{{ item.file }}">
+                            {% endif %}
+                            {{ item.name }} — {{ item.type }}
+                        </label>
+                        {% if item.type == 'file' %}
+                            — <a href="{{ item.file }}" download>Скачать</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </form>
     {% endif %}
 </body>
 </html>
